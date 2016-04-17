@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="Login GWT:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="logingwt-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="Login GWT:war exploded" />
+    </root>
+  </artifact>
+</component>

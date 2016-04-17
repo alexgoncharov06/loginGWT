@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="error">
+    <Properties>
+        <Property name="filename-server-all">logs/server-all.log</Property>
+        <Property name="filename-server-error">logs/server-err.log</Property>
+
+    </Properties>
+    <Appenders>
+
+        <Console name="appender-Console-all" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+        </Console>
+        <RollingFile name="appender-server-all" fileName="${filename-server-all}" append="true">
+            <PatternLayout>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1024 KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="4"/>
+        </RollingFile>
+
+        <RollingFile name="appender-server-error" fileName="${filename-server-error}" append="true">
+            <PatternLayout>
+                <pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="1024 KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max="4"/>
+        </RollingFile>
+
+
+
+
+    </Appenders>
+
+    <Loggers>
+        <Logger name="root" level="debug" additivity="false">
+            <appender-ref ref="RollingFile" level="debug"/>
+        </Logger>
+
+
+        <Logger name="com.github.alexgoncharov06.server" additivity="TRUE" level="ALL">
+            <AppenderRef ref="appender-server-all" level="ALL" />
+            <AppenderRef ref="appender-server-error" level="ERROR" />
+        </Logger>
+
+        <Logger name="com.github.alexgoncharov06.client" additivity="TRUE" level="ALL">
+            <AppenderRef ref="appender-client-all" level="ALL" />
+            <AppenderRef ref="appender-client-error" level="ERROR" />
+        </Logger>
+
+        <Root level="DEBUG">
+            <AppenderRef ref="appender-Console-all" />
+        </Root>
+    </Loggers>
+</Configuration>
