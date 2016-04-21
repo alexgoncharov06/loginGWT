@@ -9,7 +9,7 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name = "users", schema = "PUBLIC")
+@Table(name = "login_users")
 public class User implements IsSerializable {
 
 
@@ -24,6 +24,20 @@ public class User implements IsSerializable {
     @Column(name = "password", length = 64)
     private String password;
 
+
+    public User() {
+    }
+
+    public User(String login, String password) {
+        this.login = login;
+        this.setPassword(password);
+    }
+
+    public User(String login, String name, String password) {
+        this.login = login;
+        this.name = name;
+        this.setPassword(password);
+    }
 
     public String getName() {
         return name;
@@ -69,20 +83,6 @@ public class User implements IsSerializable {
         result = 31 * result + getName().hashCode();
         result = 31 * result + getPassword().hashCode();
         return result;
-    }
-
-    public User() {
-    }
-
-    public User(String login, String password) {
-        this.login = login;
-        this.setPassword(password);
-    }
-
-    public User(String login, String name, String password) {
-        this.login = login;
-        this.name = name;
-        this.setPassword(password);
     }
 
     @Override

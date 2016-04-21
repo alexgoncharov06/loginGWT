@@ -8,7 +8,7 @@
     <Appenders>
 
         <Console name="appender-Console-all" target="SYSTEM_OUT">
-            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n" />
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
         <RollingFile name="appender-server-all" fileName="${filename-server-all}" append="true">
             <PatternLayout>
@@ -31,8 +31,6 @@
         </RollingFile>
 
 
-
-
     </Appenders>
 
     <Loggers>
@@ -42,17 +40,12 @@
 
 
         <Logger name="com.github.alexgoncharov06.server" additivity="TRUE" level="ALL">
-            <AppenderRef ref="appender-server-all" level="ALL" />
-            <AppenderRef ref="appender-server-error" level="ERROR" />
-        </Logger>
-
-        <Logger name="com.github.alexgoncharov06.client" additivity="TRUE" level="ALL">
-            <AppenderRef ref="appender-client-all" level="ALL" />
-            <AppenderRef ref="appender-client-error" level="ERROR" />
+            <AppenderRef ref="appender-server-all" level="ALL"/>
+            <AppenderRef ref="appender-server-error" level="ERROR"/>
         </Logger>
 
         <Root level="DEBUG">
-            <AppenderRef ref="appender-Console-all" />
+            <AppenderRef ref="appender-Console-all"/>
         </Root>
     </Loggers>
 </Configuration>

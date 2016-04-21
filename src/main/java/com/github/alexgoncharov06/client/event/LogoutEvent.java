@@ -14,10 +14,9 @@ public class LogoutEvent extends GwtEvent<LogoutEventHandler> {
         this.user = user;
     }
 
-    public User getUser(){
+    public User getUser() {
         return user;
     }
-
 
 
     public Type<LogoutEventHandler> getAssociatedType() {

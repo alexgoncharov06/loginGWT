@@ -15,14 +15,26 @@ import org.hibernate.service.ServiceRegistryBuilder;
  */
 public class HibernateUtil {
 
-    private static ServiceRegistry serviceRegistry;
     private static final ThreadLocal<Session> threadLocal = new ThreadLocal();
-    private static SessionFactory sessionFactory;
     private static final Logger log = LogManager.getLogger(HibernateUtil.class);
+    private static ServiceRegistry serviceRegistry;
+    private static SessionFactory sessionFactory;
+
+    static {
+        try {
+            sessionFactory = configureSessionFactory();
+        } catch (Exception e) {
+            log.warn("%%%% Error Creating SessionFactory %%%%");
+            log.warn(e.getMessage());
+        }
+    }
+
+
+    private HibernateUtil() {
+    }
 
     private static SessionFactory configureSessionFactory() {
         try {
-
             Configuration configuration = new Configuration();
             configuration.configure();
             serviceRegistry = new ServiceRegistryBuilder()
@@ -36,19 +48,6 @@ public class HibernateUtil {
             log.warn(e.getMessage());
         }
         return sessionFactory;
-    }
-
-
-    static {
-        try {
-            sessionFactory = configureSessionFactory();
-        } catch (Exception e) {
-            log.warn("%%%% Error Creating SessionFactory %%%%");
-            log.warn(e.getMessage());
-        }
-    }
-
-    private HibernateUtil() {
     }
 
     public static SessionFactory getSessionFactory() {
@@ -79,7 +78,7 @@ public class HibernateUtil {
     }
 
     public static void closeSession() throws HibernateException {
-        Session session = (Session) threadLocal.get();
+        Session session = threadLocal.get();
         threadLocal.set(null);
 
         if (session != null) {

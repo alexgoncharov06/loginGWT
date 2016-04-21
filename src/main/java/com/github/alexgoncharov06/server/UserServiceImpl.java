@@ -3,12 +3,9 @@ package com.github.alexgoncharov06.server;
 import com.github.alexgoncharov06.shared.User;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
-
-import java.util.List;
 
 
 /**
@@ -17,14 +14,11 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private static final Logger log = LogManager.getLogger(UserServiceImpl.class);
-
     private SessionFactory sessionFactory;
     private Session session;
 
-
     public UserServiceImpl() {
         sessionFactory = HibernateUtil.getSessionFactory();
-
     }
 
     @Override
@@ -32,11 +26,9 @@ public class UserServiceImpl implements UserService {
         User user = null;
 
         try {
-
             user = (User) sessionFactory.openSession()
                     .createCriteria(User.class)
                     .add(Restrictions.eq("login", login)).uniqueResult();
-
         } catch (Exception e) {
             log.warn(e.getMessage());
         } finally {
@@ -46,77 +38,5 @@ public class UserServiceImpl implements UserService {
         }
 
         return user;
-    }
-
-    @Override
-    public void saveUser(User user) {
-        try {
-            session = sessionFactory.openSession();
-            session.beginTransaction();
-            session.saveOrUpdate(user);
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            log.warn(e.getMessage());
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-    }
-
-    @Override
-    public void deleteUser(User user) {
-
-
-        try {
-
-            sessionFactory.openSession()
-                    .beginTransaction();
-
-
-            user = (User) sessionFactory.getCurrentSession()
-                    .get(User.class, user.getLogin());
-            sessionFactory.getCurrentSession()
-                    .delete(user);
-            sessionFactory.getCurrentSession()
-                    .getTransaction().commit();
-
-        } catch (Exception e) {
-            sessionFactory.getCurrentSession()
-                    .getTransaction().rollback();
-            log.warn(e.getMessage());
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-
-
-    }
-
-    @Override
-    public List<User> getAllUsers() {
-        List<User> userList = null;
-        try {
-
-            session = sessionFactory.openSession();
-            session.beginTransaction();
-
-            userList = session.createCriteria(User.class)
-                    .setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
-            session.getTransaction().commit();
-
-
-        } catch (Exception e) {
-            sessionFactory.getCurrentSession()
-                    .getTransaction().rollback();
-            log.warn(e.getMessage());
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
-
-        return userList;
     }
 }

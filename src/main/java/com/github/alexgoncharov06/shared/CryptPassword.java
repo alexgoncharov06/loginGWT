@@ -10,21 +10,17 @@ import java.security.NoSuchAlgorithmException;
  * Created by Aleksandr Honcharov (alexwolf) on 16.04.16.
  */
 public class CryptPassword {
-    private static String SOLD = "Ardas";
     private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(CryptPassword.class.getName());
+    private static String SOLD = "Ardas";
 
     public static String encryptPassword(String password) {
 
-
         String soldPassword = "";
         for (int i = 0; i < password.length(); i++) {
-
-            soldPassword.concat(String.valueOf(password.charAt(i)));
+            soldPassword += String.valueOf(password.charAt(i));
             if (i < SOLD.length()) {
-                soldPassword.concat(String.valueOf(SOLD.charAt(i)));
+                soldPassword += String.valueOf(SOLD.charAt(i));
             }
-
-
         }
         MessageDigest crypt = null;
         try {

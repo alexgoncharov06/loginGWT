@@ -7,7 +7,6 @@ import com.google.gwt.i18n.client.Messages;
  */
 public interface LoginMessages extends Messages {
 
-
     @Key("loginLabel")
     String loginLabel();
 

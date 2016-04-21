@@ -10,14 +10,12 @@ public class LoginEvent extends GwtEvent<LoginEventHandler> {
     public static Type<LoginEventHandler> TYPE = new Type<LoginEventHandler>();
     private final User user;
 
-
-    public LoginEvent(User user){
+    public LoginEvent(User user) {
 
         this.user = user;
     }
 
-
-    public  User getUser() {
+    public User getUser() {
         return user;
     }
 

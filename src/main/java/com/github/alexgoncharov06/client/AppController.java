@@ -24,37 +24,30 @@ import java.util.logging.Logger;
  */
 public class AppController implements Presenter, ValueChangeHandler {
 
-
-
+    private static final Logger log = Logger.getLogger(AppController.class.getName());
     private final HandlerManager eventBus;
     private final LoginApplicationServiceAsync rpcService;
+    private final MainPageApplicationServiceAsync rpcMainPageService;
     private Panel container;
     private User user;
 
-    private static final Logger log = Logger.getLogger(AppController.class.getName());
 
-
-
-
-    public AppController(LoginApplicationServiceAsync rpcService, HandlerManager eventBus) {
+    public AppController(LoginApplicationServiceAsync rpcService, MainPageApplicationServiceAsync rpcMainPageService, HandlerManager eventBus) {
         this.eventBus = eventBus;
         this.rpcService = rpcService;
+        this.rpcMainPageService = rpcMainPageService;
         bind();
     }
 
     private void bind() {
-
         History.addValueChangeHandler(this);
-
         eventBus.addHandler(LoginEvent.TYPE, new LoginEventHandler() {
             @Override
             public void onLogin(LoginEvent event) {
                 user = event.getUser();
                 goLogin();
-
             }
         });
-
         eventBus.addHandler(LogoutEvent.TYPE, new LogoutEventHandler() {
             @Override
             public void onLogout(LogoutEvent event) {
@@ -62,13 +55,9 @@ public class AppController implements Presenter, ValueChangeHandler {
                     user = null;
                 }
                 goLogout();
-
             }
         });
-
-
     }
-
 
     private void goLogin() {
         History.newItem("main");
@@ -78,49 +67,32 @@ public class AppController implements Presenter, ValueChangeHandler {
         History.newItem("login");
     }
 
-
     @Override
     public void onValueChange(ValueChangeEvent event) {
 
-
         String token = (String) event.getValue();
-
         if (token != null) {
             Presenter presenter = null;
-
             if (token.equals("login")) {
                 presenter = new LoginPagePresenter(rpcService, eventBus, new LoginForm());
             } else if (token.equals("main")) {
-
-                presenter = new MainPagePresenter(rpcService, eventBus, new MainPage(), user);
+                presenter = new MainPagePresenter(rpcMainPageService, eventBus, new MainPage(), user);
             }
-
-
             if (presenter != null) {
                 presenter.go(container);
             }
         }
-
-
     }
 
     @Override
     public void go(Panel panel) {
-
         this.container = panel;
-
-//        if ("".equals(History.getToken()) && user == null) {
         if (user == null) {
-
             History.newItem("login");
-
         } else if (user != null) {
-
             History.newItem("main");
-
         } else {
             History.fireCurrentHistoryState();
         }
-
     }
 }

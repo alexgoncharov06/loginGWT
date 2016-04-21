@@ -6,7 +6,6 @@ import com.github.alexgoncharov06.client.international.LoginMessages;
 import com.github.alexgoncharov06.client.view.LoginForm;
 import com.github.alexgoncharov06.shared.User;
 import com.google.gwt.core.client.GWT;
-import com.google.gwt.event.dom.client.HasClickHandlers;
 import com.google.gwt.event.shared.HandlerManager;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.Panel;
@@ -18,36 +17,11 @@ import com.google.gwt.user.client.ui.Widget;
  */
 public class LoginPagePresenter implements Presenter {
 
-
+    private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(LoginPagePresenter.class.getName());
     private final Display view;
     private final HandlerManager eventBus;
     private final LoginApplicationServiceAsync rpcService;
     private final LoginMessages LANG = GWT.create(LoginMessages.class);
-
-    private static final java.util.logging.Logger log = java.util.logging.Logger.getLogger(LoginPagePresenter.class.getName());
-
-    public interface Display {
-        public String getLogin();
-
-        public String getLoginLabel();
-
-        public String getPasswordLabel();
-
-        public HasClickHandlers getButtonSubmit();
-
-        public String getPassword();
-
-        public Widget asWidget();
-
-        public void alert(String msg);
-
-        public void setPresenter(LoginPagePresenter presenter);
-
-        void clear();
-
-
-    }
-
 
     public LoginPagePresenter(LoginApplicationServiceAsync rpcService, HandlerManager eventBus, LoginForm view) {
         this.view = view;
@@ -57,15 +31,11 @@ public class LoginPagePresenter implements Presenter {
         this.view.clear();
     }
 
-
     @Override
     public void go(Panel panel) {
-
         panel.clear();
         panel.add(view.asWidget());
-
     }
-
 
     public void login() {
 
@@ -79,28 +49,30 @@ public class LoginPagePresenter implements Presenter {
             @Override
             public void onSuccess(User result) {
 
-
-                boolean logined;
-
-
-                if (result == null) logined = false;
-                else logined = true;
-
-                if (logined) {
-
+                if (result != null) {
                     eventBus.fireEvent(new LoginEvent(result));
-
                 } else {
-
                     view.alert(LANG.loginError());
                     log.info(LANG.loginError());
                 }
-
-
             }
         });
 
     }
 
+    public interface Display {
+        String getLogin();
+
+        String getPassword();
+
+        Widget asWidget();
+
+        void alert(String msg);
+
+        void setPresenter(LoginPagePresenter presenter);
+
+        void clear();
+
+    }
 
 }

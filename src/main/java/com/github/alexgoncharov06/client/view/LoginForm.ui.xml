@@ -3,35 +3,35 @@
              ui:generateFormat='com.google.gwt.i18n.rebind.format.PropertiesFormat'
              ui:generateKeys="com.google.gwt.i18n.server.keygen.MD5KeyGenerator"
              ui:generateLocales="default">
-    <g:HTMLPanel ui:field="loginForm" >
-            <form id="form" class="parent">
-                <table class="loginForm">
-                    <tr>
-                        <td>
-                            <g:Label ui:field="labelLogin"/>
-                        </td>
-                        <td>
-                            <g:TextBox  ui:field="loginBox"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <g:Label ui:field="labelPassword"/>
-                        </td>
-                        <td>
-                            <g:PasswordTextBox ui:field="passwordBox"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                        </td>
-                        <td>
-                            <g:Button ui:field="buttonSubmit"> </g:Button>
-                        </td>
-                    </tr>
+    <g:HTMLPanel ui:field="loginForm">
+        <form id="form" class="parent">
+            <table class="loginForm">
+                <tr>
+                    <td>
+                        <g:Label ui:field="labelLogin"/>
+                    </td>
+                    <td>
+                        <g:TextBox ui:field="loginBox"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <g:Label ui:field="labelPassword"/>
+                    </td>
+                    <td>
+                        <g:PasswordTextBox ui:field="passwordBox"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                    </td>
+                    <td>
+                        <g:Button ui:field="buttonSubmit"></g:Button>
+                    </td>
+                </tr>
 
-                </table>
-            </form>
+            </table>
+        </form>
     </g:HTMLPanel>
 
 </ui:UiBinder>

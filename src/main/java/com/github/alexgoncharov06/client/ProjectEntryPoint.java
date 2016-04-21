@@ -16,15 +16,14 @@ public class ProjectEntryPoint implements EntryPoint {
             GWT.create(LoginMessages.class);
 
 
-
     @Override
     public void onModuleLoad() {
 
         LoginApplicationServiceAsync rpcService = GWT.create(LoginApplicationService.class);
+        MainPageApplicationServiceAsync rpcMainPageService = GWT.create(MainPageApplicationService.class);
         HandlerManager eventBus = new HandlerManager(null);
-        AppController appViewer = new AppController(rpcService, eventBus);
+        AppController appViewer = new AppController(rpcService, rpcMainPageService, eventBus);
         appViewer.go(RootPanel.get());
-
 
 
     }

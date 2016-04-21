@@ -1,15 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-    xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
-    version="2.5">
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
     <servlet>
         <servlet-name>com.github.alexgoncharov06.Project LoginApplicationService</servlet-name>
         <servlet-class>com.github.alexgoncharov06.server.LoginApplicationServiceImpl</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>com.github.alexgoncharov06.Project MainPageApplecationService</servlet-name>
+        <servlet-class>com.github.alexgoncharov06.server.MainPageApplicationServiceImpl</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>com.github.alexgoncharov06.Project LoginApplicationService</servlet-name>
         <url-pattern>/Project/LoginApplicationService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>com.github.alexgoncharov06.Project MainPageApplecationService</servlet-name>
+        <url-pattern>/Project/MainPageApplicationService</url-pattern>
     </servlet-mapping>
 
     <!-- Servlets -->
@@ -19,5 +27,9 @@
         <welcome-file>Project.html</welcome-file>
     </welcome-file-list>
 
+    <!--Listener-->
+    <listener>
+        <listener-class>com.github.alexgoncharov06.server.listeners.DBInitializingListener</listener-class>
+    </listener>
 
 </web-app>
